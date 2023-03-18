@@ -1,9 +1,8 @@
 def count_small_num(N, s_num):
-    s_num -= 1
     count = 0
     for i in range(1, N + 1):
         count += min(s_num // i, N)
-    return count+1
+    return count
 
 
 if __name__ == '__main__':
@@ -15,10 +14,10 @@ if __name__ == '__main__':
     right = k
     while(left <= right):
         count = count_small_num(N, s_num)
-        if count > k:
+        if count >= k:
             right = s_num - 1
         else:
             left = s_num + 1
         s_num = int((left+right)/2)
 
-    print(s_num)
+    print(s_num+1)
