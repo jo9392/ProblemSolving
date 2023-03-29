@@ -1,13 +1,19 @@
+from collections import deque
 def solution(k, dungeons):
-    answer = 0
-    dungeons_list = []
-    for d in dungeons:
-        dungeons_list.append((d[0] - d[1], d))
+    dq = deque()
+    visited = [False for i in range(len(dungeons))]
+    cnt = 0
+    dq.append([k, visited, cnt])
+    while (dq):
+        temp_dq = dq.popleft()
+        for i in range(len(dungeons)):
+            k = temp_dq[0]
+            visited = temp_dq[1].copy()
+            cnt = temp_dq[2]
+            if k >= dungeons[i][0] and not visited[i]:
+                k -= dungeons[i][1]
+                visited[i] = True
+                cnt += 1
+                dq.append([k, visited, cnt])
 
-    dungeons_list = sorted(dungeons_list, key=lambda dungeons_list: dungeons_list[0],
-                           reverse=True)
-    for d in dungeons_list:
-        if k >= d[1][0]:
-            answer += 1
-            k -= d[1][1]
-    return answer
+    return cnt
