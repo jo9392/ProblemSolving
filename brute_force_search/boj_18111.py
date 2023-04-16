@@ -4,9 +4,8 @@ global land_height_list, n, m
 
 n, m, having_block = map(int, input().split())
 land_height_list = []
-# land_height_list = [1,9,6,5,3,2,3,4,0,0,3,4]
 for _ in range(n):
-    land_height = list(map(int, input().split(  )))
+    land_height = list(map(int, input().split()))
     for l in land_height:
         land_height_list.append(l)
 
@@ -56,8 +55,14 @@ if __name__ == "__main__":
         print(calculate_cost(k), k)
     else:
         cost_list = []
-        for i in range(-5,5):
-            if is_it_possible_k(k+i):
-                cost_list.append([calculate_cost(k+i), k+i])
-        cost_list = sorted(cost_list, key=lambda cost_list:cost_list[0])
+        gap = 0
+        while(True):
+            gap += 1
+            if is_it_possible_k(k+gap) or is_it_possible_k(k-gap):
+                break
+
+        if is_it_possible_k(k + gap): cost_list.append([calculate_cost(k+gap), k+gap])
+        if is_it_possible_k(k - gap) and k-gap >= 0: cost_list.append([calculate_cost(k - gap), k - gap])
+
+        cost_list = sorted(cost_list, key=lambda x:(x[0], -x[1]))
         print(cost_list[0][0], cost_list[0][1])
