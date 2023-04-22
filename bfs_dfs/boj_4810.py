@@ -1,21 +1,23 @@
-PATH = "C:\\python\\ComputerVision\\contour_tracing"
+import sys
+input = sys.stdin.readline
 global b_image, label_image, m, n, neighbor8, num_region, label_num
 
 
-def read_image(file_name):
-    global m, n
-    f = open(PATH+file_name, 'r')
-    m, n = map(int, f.readline().split())
+def read_image():
+    global m, n, b_image
+    m, n = map(int, input().split())
+    if (m, n) == (0,0):
+        return m, n
     binary_list = []
     for _ in range(m):
-        line = [int(i) for i in f.readline().split()]
+        line = [int(i) for i in input().strip('\n')]
         binary_list.append(line)
-    f.close()
-    return m, n, binary_list
+    b_image = binary_list
+    return m, n
 
 def save_image(file_name):
     global label_image
-    f = open(PATH+file_name, 'w')
+    f = open(file_name, 'w')
     f.write(str(label_num-1)+"\n")
     for l in label_image:
         f.write(" ".join(str(i) for i in l))
@@ -36,14 +38,14 @@ def label_with_BT():    #라벨링 함수
                 if cur_p == 1: # object를 만났을 때 탐색 시작
                     ref_p1 = label_image[i][j-1]
                     ref_p2 = label_image[i-1][j-1]
-                    if ref_p1 > 1 : # p1에 개체가 있으면 propagation
-                        num_region[ref_p1] += 1
-                        label_image[i][j] = ref_p1
-                    elif ref_p1==0 and ref_p2 >= 2: # p1은 비었고 p2에만 개체가 있으면 hole
-                        num_region[ref_p2] += 1
-                        label_image[i][j] = ref_p2
-                        boundary_tracing(i, j, ref_p2, "backward")
-                    elif ref_p1 == 0 and ref_p2 == 0: ## 새로운 개체 탐색, region start
+                    # if ref_p1 > 1 : # p1에 개체가 있으면 propagation
+                    #     num_region[ref_p1] += 1
+                    #     label_image[i][j] = ref_p1
+                    # if ref_p1==0 and ref_p2 >= 2: # p1은 비었고 p2에만 개체가 있으면 hole
+                    #     num_region[ref_p2] += 1
+                    #     label_image[i][j] = ref_p2
+                    #     boundary_tracing(i, j, ref_p2, "backward")
+                    if ref_p1 == 0 and ref_p2 == 0: ## 새로운 개체 탐색, region start
                         label_num += 1
                         num_region[label_num] += 1
                         label_image[i][j] = label_num
@@ -95,7 +97,22 @@ def boundary_tracing(y, x, label, tag):
 
 
 if __name__ == "__main__":
-    for i in range(1,4):
-        m, n, b_image = read_image(f"\\input_example\\input{i}.txt")
+    case_num = 0
+    while(True):
+        case_num += 1
+        m, n = read_image()
+        if (m, n) == (0, 0):
+            break
         label_with_BT()
-        save_image(f"\\output_example\\output{i}.txt")
+        answer = ""
+        for n in num_region[2:]:
+            if n > 5:
+                answer += str(n) + " "
+            if n == 0:
+                break
+        save_image(f"output{case_num}")
+        print("Case ", case_num)
+        if answer == "":
+            print("no objects found")
+        else:
+            print(answer[:-1])
