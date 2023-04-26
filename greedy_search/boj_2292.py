@@ -1,4 +1,3 @@
-
 input_num = int(input())
 
 if input_num == 1: print(1)
