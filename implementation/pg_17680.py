@@ -1,5 +1,6 @@
 # collections import deque
 # deque, list는 remove(c)로 특정 원소를 삭제하는 기능이 있다
+# deque(maxlen=cacheSize) 쓰면 maxlen을 지정할 수 있다
 
 from collections import deque
 def solution(cacheSize, cities):
