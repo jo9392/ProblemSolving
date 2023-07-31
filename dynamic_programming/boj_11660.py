@@ -10,14 +10,6 @@ for i in range(n):
 for i in range(m):
     pos_list.append(list(map(int, input().split())))
 
-n, m = 2, 4
-table_list = [[1,2],
-              [3,4]]
-pos_list = [[0,0,0,0],
-            [0,1,0,1],
-            [1,0,1,0],
-            [1,1,1,1]]
-
 dp = [[0]*n for i in range(n)]
 dp[0][0] = table_list[0][0]
 for i in range(1,n):
