@@ -4,7 +4,7 @@
 from collections import deque, defaultdict
 
 
-def dijstra(road, N):
+def dijkstra(road, N):
     cost_list = [5000000 for _ in range(N)]
     node_relation = defaultdict(list)
     for a, b, c in road:
