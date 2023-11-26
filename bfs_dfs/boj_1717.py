@@ -1,4 +1,10 @@
 # union-find 알고리즘
+# 경로압축 - 모든 리프노드를 루트노드와 연결시키는 find 함수를 써야 recursion error가 뜨지 않는다. 더 빠르다.
+# def find_parent(x):
+#     if parent[x] != x:
+#         parent[x] = find_parent(parent[x])
+#     return parent[x]
+
 import sys
 
 input = sys.stdin.readline
