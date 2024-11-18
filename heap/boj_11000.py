@@ -8,7 +8,7 @@ n = int(input())
 time = []
 for _ in range(n):
     time.append(list(map(int,input().split())))
-time.sort(key=lambda x : (x[0],x[1]))
+time.sort(key=lambda x : (x[0]))
 
 schedule = [time[0][1]]
 for i in range(1,n):
