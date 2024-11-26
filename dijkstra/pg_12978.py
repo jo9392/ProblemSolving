@@ -29,7 +29,7 @@ def dijkstra(road, N):
 
 def solution(N, road, K):
     answer = 0
-    cost_list = dijstra(road, N)
+    cost_list = dijkstra(road, N)
     for c in cost_list:
         if c <= K:
             answer += 1
